@@ -5,12 +5,12 @@ import UserProfileService from './userProfileService'
 export class AuthService {
 
   config = {
-    authority: "https://localhost:7288",
+    authority: process.env.REACT_APP_IDENTITY_SERVER_URL,
     client_id: "eventorganizer",
-    redirect_uri: "https://localhost:3000/signin-oidc",
+    redirect_uri: `${process.env.REACT_APP_WEB_CLIENT_URL}/signin-oidc`,
     response_type: "id_token token",
     scope: "openid profile eventorganizerapi",
-    post_logout_redirect_uri: "https://localhost:3000/signout-oidc",
+    post_logout_redirect_uri: `${process.env.REACT_APP_WEB_CLIENT_URL}/signout-oidc`,
     automaticSilentRenew: true,
     loadUserInfo: true
   };

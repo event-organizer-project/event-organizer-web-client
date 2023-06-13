@@ -4,7 +4,7 @@ import store from '../store/store';
 
 export default class userProfileService {
 
-    resourceName = "/api/userprofile";
+    resourceName = `${process.env.REACT_APP_WEB_API_URL}/userprofile`;
 
     getCurrentUserProfile = () => {
         store.dispatch(startLoading());

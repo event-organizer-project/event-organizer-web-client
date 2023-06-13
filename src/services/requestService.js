@@ -5,7 +5,7 @@ import store from '../store/store';
 export default class RequestService {
 
     constructor(resourceName) {
-        this.resourceName = "/api/" + resourceName;
+        this.resourceName = `${process.env.REACT_APP_WEB_API_URL}/${resourceName}`;
     }
 
     get = (id) => {

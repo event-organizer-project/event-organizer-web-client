@@ -13,10 +13,10 @@ export default function LoadingIndicator () {
         left: '50%',
         marginTop: `${-indicatorSize/2}px`,
         marginLeft: `${-indicatorSize/2}px`,
-        color: 'success'
+        color: 'info'
       }
 
     return loading && <CircularProgress size={indicatorSize}
-        color="success"
+        color="info"
         sx={styles}/>
 }

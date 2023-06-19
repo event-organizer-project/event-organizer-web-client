@@ -21,7 +21,7 @@ header {
   display: flex;
   justify-content: space-between;
   height: 10vh;
-  background-color: rgb(173, 218, 173);
+  background-color: #424d77;
 }
 
 header img {
@@ -34,11 +34,11 @@ header a {
   align-items: center;
   padding: 1vh 3vw;
   text-decoration: none;
-  color: black;
+  color: whitesmoke;
 }
 
 header a:hover {
-  background-color: rgb(213, 255, 208);
+  background-color: #313852;
 }
 
 header label {
@@ -56,7 +56,8 @@ footer {
   justify-content: center;
   align-items: center;
   height: 10vh;
-  background-color: rgb(173, 218, 173);
+  background-color: #424d77;
+  color: whitesmoke;
 }
 
 /* FOOTER */

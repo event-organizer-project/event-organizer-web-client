@@ -17,7 +17,8 @@ export default function EventView ({ event }) {
     const descriptionSX = {
         lineHeight: '1.5em',
         height: '3em',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        whiteSpace: 'pre-line'
     }
 
     const titleSX = { fontWeight: 'bold' }

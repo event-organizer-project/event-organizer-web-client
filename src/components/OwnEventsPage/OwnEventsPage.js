@@ -26,14 +26,9 @@ export default function OwnEventsPage() {
                 <Typography variant='h5' gutterBottom padding='6px 2px'>
                     Created events
                 </Typography>
-                <Button component={Link} to={`${routes.events}/0`} variant="contained" color="primary">
-                    Create New Event
-                </Button>
-                <Tooltip onClick={null/*handleClick*/} margin='auto'>
-                <IconButton>
+                <IconButton component={Link} to={`${routes.events}/0`} style={{ height: 'fit-content' }}>
                     <AddCircleOutlineIcon />
                 </IconButton>
-            </Tooltip>
             </Box>
 
             <EventsGrid events={ownEvents.createdEvents} itemsPerPageCount={3}/>

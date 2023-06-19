@@ -24,7 +24,7 @@ export default function SpecificEventPageView({ event, setEvent, toUpdateMode })
                 <Grid item xs={12} sm={5} width='100%' >
 
                     <Typography variant="subtitle2">Description:</Typography>
-                    <Typography>{event.description}</Typography>
+                    <Typography style={{whiteSpace: 'pre-line'}} >{event.description}</Typography>
 
                     <Typography variant="subtitle2">Date:</Typography>
                     <Typography>{event.startDate}<AccessTimeIcon sx={{ height: "0.5em", width: '0.5em', ml: '0.5em' }} /> {event.startTime} - {event.endTime}</Typography>

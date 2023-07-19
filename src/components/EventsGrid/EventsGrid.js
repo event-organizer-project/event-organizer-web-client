@@ -13,7 +13,7 @@ export default function EventsGrid({ events, itemsPerPageCount, height }) {
     useEffect(() => {
         setPage({
             items: events.slice(0, itemsPerPageCount),
-            currentPage: 1,
+            currentPage: events.length == 0 ? 0 : 1,
             pageCount: Math.ceil(events.length / itemsPerPageCount)
         })
     }, [])

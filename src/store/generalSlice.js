@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
+    generalLoading: true,
     loading: false,
     error: null
 }
@@ -20,9 +21,12 @@ const generalSlice = createSlice({
         },
         removeError(state) {
             state.error = null;
+        },
+        setGeneralLoading(state, action) {
+            state.generalLoading = action.payload
         }
     }
 })
 
-export const { startLoading, finishLoading, setError, removeError } = generalSlice.actions
+export const { startLoading, finishLoading, setError, removeError, setGeneralLoading } = generalSlice.actions
 export default generalSlice.reducer

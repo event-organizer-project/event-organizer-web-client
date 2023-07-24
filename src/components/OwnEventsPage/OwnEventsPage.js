@@ -20,20 +20,34 @@ export default function OwnEventsPage() {
             });
     }, [])
 
+    const containerStyle = {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        minHeight: '36vh',
+        justifyContent: 'space-between',
+        padding: '2vh 0'
+    }
+
     return ownEvents && (
         <Box>
-            <Box display='flex' margin='auto auto'>
-                <Typography variant='h5' gutterBottom padding='6px 2px'>
-                    Created events
-                </Typography>
-                <IconButton component={Link} to={`${routes.events}/0`} style={{ height: 'fit-content' }}>
-                    <AddCircleOutlineIcon />
-                </IconButton>
-            </Box>
+            <Box style={containerStyle}>
+                <Box display='flex'>
+                    <Typography variant='h5' gutterBottom padding='6px 2px'>
+                        Created events
+                    </Typography>
+                    <IconButton component={Link} to={`${routes.events}/0`} style={{ height: 'fit-content' }}>
+                        <AddCircleOutlineIcon />
+                    </IconButton>
+                </Box>
 
-            <EventsGrid events={ownEvents.createdEvents} itemsPerPageCount={3}/>
-            <Typography variant='h5' gutterBottom margin='auto auto'>Joined  events</Typography>
-            <EventsGrid events={ownEvents.joinedEvents} itemsPerPageCount={3}/>
+                <EventsGrid events={ownEvents.createdEvents} itemsPerPageCount={3}/>
+            </Box>
+            
+            <Box style={containerStyle}>
+                <Typography variant='h5' gutterBottom >Joined  events</Typography>
+                <EventsGrid events={ownEvents.joinedEvents} itemsPerPageCount={3}/>
+            </Box>
         </Box>
     )
 }

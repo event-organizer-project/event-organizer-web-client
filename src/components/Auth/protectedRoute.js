@@ -4,10 +4,15 @@ import { useSelector } from 'react-redux'
 
 function ProtectedRoute({ children, component: Component, ...rest }) {
   const user = useSelector(state => state.auth.user)
+  const generalLoading = useSelector((state) => state.general.generalLoading)
 
-  return user
+  if (!generalLoading) {
+    return user
     ? (<Route {...rest} component={Component} />)
     : (<Redirect to={'/'} />)
+  }
+  else
+    return null;
 }
 
 export default ProtectedRoute

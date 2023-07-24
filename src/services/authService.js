@@ -1,5 +1,7 @@
 import { UserManager } from 'oidc-client';
 import { storeUserError, storeUser, setAuthHeader } from '../store/authSlice'
+import { setGeneralLoading } from '../store/generalSlice'
+
 import UserProfileService from './userProfileService'
 
 export class AuthService {
@@ -21,6 +23,7 @@ export class AuthService {
   }
 
   async loadUserFromStorage(store) {
+    store.dispatch(setGeneralLoading(true))
     try {
       let user = await this.userManager.getUser()
       if (!user) {
@@ -37,6 +40,7 @@ export class AuthService {
       console.error("loadUserFromStorage: ", e)
       store.dispatch(storeUserError())
     }
+    store.dispatch(setGeneralLoading(false))
   }
 
   signinRedirect() {

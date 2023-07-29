@@ -11,12 +11,13 @@ export default function EventsGrid({ events, itemsPerPageCount, height }) {
     })
 
     useEffect(() => {
-        setPage({
-            items: events.slice(0, itemsPerPageCount),
-            currentPage: events.length == 0 ? 0 : 1,
-            pageCount: Math.ceil(events.length / itemsPerPageCount)
-        })
-    }, [])
+        if (events)
+            setPage({
+                items: events.slice(0, itemsPerPageCount),
+                currentPage: events.length == 0 ? 0 : 1,
+                pageCount: Math.ceil(events.length / itemsPerPageCount)
+            })
+    }, [events])
 
     const previous = (e) => {
         e.preventDefault();
@@ -44,7 +45,7 @@ export default function EventsGrid({ events, itemsPerPageCount, height }) {
         setPage(newPage);
     }
 
-    return (
+    return events && (
         <Box display='flex' flexDirection='column' justifyContent='space-between' height={height}>
             <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 3, sm: 8, md: 12 }} style={{ width: '95vw' }}>
                 {page.items.map(event => (

@@ -5,8 +5,20 @@ import UserView from 'components/UserView/UserView'
 import UserViewList from 'components/UserViewList/UserViewList'
 import EventOptionsMenu from './EventOptionsMenu'
 import { mapEnumToString } from 'mappers/recurrence-type-mapper'
+import { useLocationNavigator } from 'utils/locationNavigator'
+import EventSearchUrlBuilder from 'utils/eventSearchUrlBuilder'
 
 export default function SpecificEventPageView({ event, setEvent, toUpdateMode }) {
+
+    const locationNavigator = useLocationNavigator();
+
+    const onTagClick = (tag) => {
+        const url = new EventSearchUrlBuilder()
+            .addTag(tag)
+            .build();
+        
+        locationNavigator.navigate(url);
+    }
 
     return event && (
         <Box>
@@ -33,7 +45,7 @@ export default function SpecificEventPageView({ event, setEvent, toUpdateMode })
                     <Typography>{mapEnumToString(event.recurrenceType)}</Typography>
 
                     <Typography variant="subtitle2">Tags:</Typography>
-                    <EventTagList tags={event.eventTags} />
+                    <EventTagList tags={event.eventTags} onClick={onTagClick} />
 
                     <Typography variant="subtitle2">Owner:</Typography>
                     <UserView user={event.owner} />

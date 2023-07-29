@@ -25,11 +25,29 @@ export default class RequestService {
             });
     }
 
-    getList = (top, skip) => {
+    getAll = (top, skip) => {
         store.dispatch(startLoading());
 
         return axios
-            .get(`${this.resourceName}?top=${top}&skip=${skip}`)
+            .get(`${this.resourceName}/all?top=${top}&skip=${skip}`)
+            .then(response => {
+                return response.data;
+            })
+            .catch(error => {
+                console.log('Error:', error);
+                store.dispatch(setError(error.response.statusText));
+                return null;
+            })
+            .finally(() => {
+                store.dispatch(finishLoading());
+            });
+    }
+
+    getList = (criteria) => {
+        store.dispatch(startLoading());
+
+        return axios
+            .post(`${this.resourceName}/list`, criteria)
             .then(response => {
                 return response.data;
             })

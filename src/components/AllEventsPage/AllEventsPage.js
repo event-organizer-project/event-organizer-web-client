@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
-import { Box, Typography } from '@mui/material';
+import { useState } from 'react';
+import { Box } from '@mui/material';
+import EventSearchPanel from 'components/AllEventsPage/EventSearchPanel'
 import EventsGrid from 'components/EventsGrid/EventsGrid'
 import eventRequestService from 'services/eventRequestService'
 
@@ -9,20 +10,25 @@ export default function AllEventsPage() {
 
     const [events, setEvents] = useState(null);
 
-    useEffect(() => {
-        eventRequestService.getList(100, 0)
+    const getEvents = (params) => {
+
+        let criteria = {
+            ...params,
+            top: 100,
+            skip: 0
+        }
+
+        eventRequestService.getList(criteria)
             .then(result => {
                 setEvents(result);
             });
-    }, [])
+    }
 
     return (
         <Box>
-            <Typography variant='h6' gutterBottom padding='5px 0'>
-                There will be a page with an event search panel and tools for creating new events.
-            </Typography>
+            <EventSearchPanel getEventList={getEvents} />
 
-            {events && <EventsGrid events={events} itemsPerPageCount={itemsPerPageCount} height='70vh'/>}
+            <EventsGrid events={events} itemsPerPageCount={itemsPerPageCount} height='70vh' />
         </Box>
     )
 }

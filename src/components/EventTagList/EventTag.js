@@ -7,7 +7,7 @@ export default function EventTag({ tag, onClick, onDelete }) {
             sx={{ margin: '1px' }}
             size='small'
             label={`#${tag}`}
-            onClick={onClick}
+            onClick={onClick ? () => onClick(tag) : null}
             onDelete={onDelete}
         />
     )

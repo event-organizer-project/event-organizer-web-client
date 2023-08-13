@@ -6,11 +6,13 @@ import UserViewList from 'components/UserViewList/UserViewList'
 import EventOptionsMenu from './EventOptionsMenu'
 import { mapEnumToString } from 'mappers/recurrence-type-mapper'
 import { useLocationNavigator } from 'utils/locationNavigator'
+import { useDateFormatter } from 'utils/dateFormatter'
 import EventSearchUrlBuilder from 'utils/eventSearchUrlBuilder'
 
 export default function SpecificEventPageView({ event, setEvent, toUpdateMode }) {
-
+    
     const locationNavigator = useLocationNavigator();
+    const dateFormatter = useDateFormatter();
 
     const onTagClick = (tag) => {
         const url = new EventSearchUrlBuilder()
@@ -33,13 +35,17 @@ export default function SpecificEventPageView({ event, setEvent, toUpdateMode })
                 />
             </Box>
             <Grid container spacing={2} width='100vw'>
-                <Grid item xs={12} sm={5} width='100%' >
+                <Grid item xs={12} sm={5}>
+                    <Typography variant="h6" gutterBottom>Details:</Typography>
 
                     <Typography variant="subtitle2">Description:</Typography>
                     <Typography style={{whiteSpace: 'pre-line'}} >{event.description}</Typography>
 
                     <Typography variant="subtitle2">Date:</Typography>
-                    <Typography>{event.startDate}<AccessTimeIcon sx={{ height: "0.5em", width: '0.5em', ml: '0.5em' }} /> {event.startTime} - {event.endTime}</Typography>
+                    <Typography>{event.startDate}
+                        <AccessTimeIcon sx={{ height: "0.5em", width: '0.5em', ml: '0.5em' }} />
+                        {dateFormatter.getTime(event.startTime)} - {dateFormatter.getTime(event.endTime)}
+                    </Typography>
 
                     <Typography variant="subtitle2">Recurrence:</Typography>
                     <Typography>{mapEnumToString(event.recurrenceType)}</Typography>
@@ -52,10 +58,12 @@ export default function SpecificEventPageView({ event, setEvent, toUpdateMode })
 
                 </Grid>
 
-                <Grid item xs={12} sm={5}>
-                    <Typography variant="h6" gutterBottom>
-                        Members:
-                    </Typography>
+                <Grid item xs={12} sm={4}>
+                    <Typography variant="h6" gutterBottom>Atachments:</Typography>
+                </Grid>
+
+                <Grid item xs={12} sm={3}>
+                    <Typography variant="h6" gutterBottom>Members:</Typography>
                     <UserViewList users={event.members} />
                 </Grid>
 

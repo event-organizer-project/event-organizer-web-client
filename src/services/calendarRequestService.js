@@ -1,17 +1,22 @@
 import axios from 'axios'
-import { startLoading, finishLoading, setError } from '../store/generalSlice'
-import store from '../store/store';
+import RequestService from './requestService'
+import { startLoading, finishLoading, setError } from 'store/generalSlice'
+import store from 'store/store';
 
-export default class UserProfileService {
+export class CalendarRequestService extends RequestService {
 
-    resourceName = `${process.env.REACT_APP_WEB_API_URL}/userprofile`;
+    constructor() {
+        super('calendar');
+    }
 
-    getCurrentUserProfile = () => {
+    get = () => {
         store.dispatch(startLoading());
         
         return axios
             .get(`${this.resourceName}/current`)
             .then(response => {
+                console.log('response:', response);
+
                 return response.data;
             })
             .catch(error => {
@@ -23,3 +28,7 @@ export default class UserProfileService {
             });
     }
 }
+
+const calendarRequestService = new CalendarRequestService();
+
+export default calendarRequestService;

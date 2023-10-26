@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { startLoading, finishLoading, setError } from '../store/generalSlice'
-import store from '../store/store';
+import { startLoading, finishLoading, setError } from 'store/generalSlice'
+import store from 'store/store';
 
 export default class RequestService {
 

@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form'
 import { FormGroup, TextField, Button } from '@mui/material';
-import { MuiChipsInput } from 'mui-chips-input'
 import EventSearchUrlBuilder from 'utils/eventSearchUrlBuilder'
 import { useLocationNavigator } from 'utils/locationNavigator'
+import TagInput from 'components/TagInput/TagInput'
 
 export default function EventSearchPanel({ getEventList }) {
 
@@ -29,6 +29,7 @@ export default function EventSearchPanel({ getEventList }) {
     }, [locationNavigator.location])
 
     const onSubmit = (data) => {
+
         const url = new EventSearchUrlBuilder()
             .setFilter(data.filter)
             .addTags(data.tags)
@@ -65,13 +66,9 @@ export default function EventSearchPanel({ getEventList }) {
             <Controller name='tags'
                 control={control}
                 render={({ field }) => (
-                    <MuiChipsInput {...field}
-                        sx={inputStyles}
-                        label='Event Tags'
-                        variant='outlined'
-                        size='small'
-                    />
+                    <TagInput field={field} setValue={setValue} sx={inputStyles} />
                 )} />
+
             <FormGroup sx={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: '2vh' }}>
                 <Button type='submit' variant='contained' color='primary'>Search</Button>
             </FormGroup>

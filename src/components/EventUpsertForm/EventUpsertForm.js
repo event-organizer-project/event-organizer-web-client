@@ -1,7 +1,8 @@
 import { useForm, Controller } from 'react-hook-form'
 import { FormGroup, TextField, Button, FormHelperText } from '@mui/material';
 import { DatePicker, MobileTimePicker } from '@mui/x-date-pickers'
-import { MuiChipsInput } from 'mui-chips-input'
+import TagInput from 'components/TagInput/TagInput'
+
 import dayjs from 'dayjs'
 import dateTimeSetting from '../../constants/date-time-setting'
 
@@ -13,7 +14,8 @@ export default function EventUpsertForm({ event, submitAction, cancelAction }) {
             errors,
             isValid
         },
-        handleSubmit
+        handleSubmit,
+        setValue
     } = useForm({
         mode: 'onBlur',
         defaultValues: {
@@ -159,12 +161,7 @@ export default function EventUpsertForm({ event, submitAction, cancelAction }) {
                 <Controller name='eventTags'
                     control={control}
                     render={({ field }) => (
-                        <MuiChipsInput {...field}
-                            sx={inputStyles}
-                            label='Event Tags'
-                            variant='outlined'
-                            size='small'
-                        />
+                        <TagInput field={field} setValue={setValue} sx={inputStyles} />
                     )} />
                 <FormGroup sx={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: '2vh' }}>
                     <Button variant='contained' color='primary' onClick={cancelAction}>Cancel</Button>

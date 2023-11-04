@@ -11,7 +11,7 @@ export class AuthService {
     client_id: "eventorganizer",
     redirect_uri: `${process.env.REACT_APP_WEB_CLIENT_URL}/signin-oidc`,
     response_type: "id_token token",
-    scope: "openid profile eventorganizerapi",
+    scope: "openid profile eventorganizer_api",
     post_logout_redirect_uri: `${process.env.REACT_APP_WEB_CLIENT_URL}/signout-oidc`,
     automaticSilentRenew: true,
     loadUserInfo: true

@@ -1,26 +1,26 @@
 self.addEventListener('push', function (event) {
-    const title = 'Event Organizer';
+
+    const notification = event.data.json();
+    const imageUrl = 'new-logo512.png';
+    const title = notification.title;
+    const urlToOpen = `${self.location.origin}/events/${notification.eventId}`;
 
     const options = {
-        body: event.data.text(),
-        //icon: imageUrl,
-        /*vibrate: [100, 50, 100],
+        body: notification.body,    
+        icon: imageUrl,
+        vibrate: [100, 50, 100],
         data: {
-            dateOfArrival: Date.now()
-        },
-        actions: [
-            {
-                action: "explore", title: actionName,
-            },
-            {
-                action: "close", title: "Ignore",
-            },
-        ]*/
+            url: urlToOpen
+        }
     };
 
     event.waitUntil(self.registration.showNotification(title, options));
+    event.waitUntil(self.skipWaiting());    
 });
 
-self.addEventListener('notificationclick', function (event) {
-    event.notification.close();
+self.addEventListener('notificationclick', event => {
+    const notificationData = event.notification.data;
+    const urlToOpen = notificationData.url;
+
+    event.waitUntil(clients.openWindow(urlToOpen));
 });

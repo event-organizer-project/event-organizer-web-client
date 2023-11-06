@@ -4,6 +4,8 @@ import { setGeneralLoading } from '../store/generalSlice'
 
 import UserProfileService from './userProfileService'
 
+import { registerPushNotifier } from 'utils/pushNotifier'
+
 export class AuthService {
 
   config = {
@@ -36,6 +38,8 @@ export class AuthService {
 
       var userProfile = await this.userProfileService.getCurrentUserProfile();
       store.dispatch(storeUser(userProfile))
+
+      registerPushNotifier();
     } catch (e) {
       console.error("loadUserFromStorage: ", e)
       store.dispatch(storeUserError())

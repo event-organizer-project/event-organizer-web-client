@@ -1,0 +1,19 @@
+name: master
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build_docker:
+    name: Build & Push Docker Image
+    needs: build
+    uses: event-organizer-project/event-organizer-infrastructure/.github/workflows/docker_build_push.yml@master
+    with:
+      dockerfile_path: ./Dockerfile
+      docker_repository_name: eo-web-client
+      push: true
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}

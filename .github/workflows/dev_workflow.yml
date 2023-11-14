@@ -1,0 +1,17 @@
+name: dev
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  build_docker:
+    name: Build Docker Image
+    needs: build
+    uses: event-organizer-project/event-organizer-infrastructure/.github/workflows/docker_build_push.yml@master
+    with:
+      dockerfile_path: ./Dockerfile
+      docker_repository_name: eo-web-client
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}

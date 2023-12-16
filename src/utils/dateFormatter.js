@@ -2,18 +2,13 @@ import dayjs from 'dayjs';
 
 export default class DateFormatter {
 
-    getDay = (date) => {
-        const parsedDate = dayjs(date);
-        const formattedDate = parsedDate.format('DD.MM');
+    getDay = date => dayjs(date).format('DD.MM');
 
-        return formattedDate;
-    }
+    getTime = date => date.slice(0, 5)
 
-    getTime = (date) => {
-        const formattedTime = date.slice(0, 5);;
+    getMonthWithYear = date => dayjs(date).format('MMMM YY');
 
-        return formattedTime;
-    }
+    getMonthNumber = date => dayjs(date).month();
 }
 
 export const useDateFormatter = () => new DateFormatter();

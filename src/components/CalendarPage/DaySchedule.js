@@ -2,8 +2,6 @@ import { Box } from '@mui/material';
 import CalendarEventPreview from './CalendarEventPreview'
 
 export default function DaySchedule({ events }) {
-
-    console.log(events);
     
     const hours = Array.from({ length: 24 }, (_, index) => index);
 

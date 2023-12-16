@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Box, Grid, ButtonGroup, Button } from '@mui/material'
 import EventView from '../EventView/EventView'
+import PaginationPanel from '../PaginationPanel/PaginationPanel'
 
 export default function EventsGrid({ events, itemsPerPageCount, height }) {
 
@@ -54,11 +55,13 @@ export default function EventsGrid({ events, itemsPerPageCount, height }) {
                     </Grid>
                 ))}
             </Grid>
-            <ButtonGroup variant="text" aria-label="text button group" sx={{ margin: '1vh auto' }} >
-                <Button onClick={previous} disabled={page.currentPage <= 1}>&lt;</Button>
-                <Button disabled>{page.currentPage} / {page.pageCount}</Button>
-                <Button onClick={next} disabled={page.currentPage == page.pageCount}>&gt;</Button>
-            </ButtonGroup>
+            <PaginationPanel
+                previousClick={previous} 
+                nextClick={next}
+                previousDisabled={page.currentPage <= 1}
+                nextDisabled={page.currentPage == page.pageCount}
+                title={`${page.currentPage} / ${page.pageCount}`}
+            />
         </Box>
     )
 }

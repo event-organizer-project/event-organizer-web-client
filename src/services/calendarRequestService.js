@@ -9,14 +9,12 @@ export class CalendarRequestService extends RequestService {
         super('calendar');
     }
 
-    get = () => {
+    get = (offset = 0) => {
         store.dispatch(startLoading());
         
         return axios
-            .get(`${this.resourceName}/current`)
+            .get(`${this.resourceName}/${offset}`)
             .then(response => {
-                console.log('response:', response);
-
                 return response.data;
             })
             .catch(error => {

@@ -1,5 +1,5 @@
-import Axios from 'axios';
-import { setupCache } from 'axios-cache-interceptor';
+import axios from 'axios';
+import { setupCache  } from 'axios-cache-interceptor';
 import { startLoading, finishLoading, setError } from 'store/generalSlice'
 import store from 'store/store';
 
@@ -7,13 +7,21 @@ export class TagService {
 
     resourceName = `${process.env.REACT_APP_WEB_API_URL}/tag`;
     
-    axios = setupCache(Axios); 
+    api = axios.create();
+
+    // Set up caching for only one specific endpoint
+    cache = setupCache(this.api, {
+      maxAge: 15 * 60 * 1000, // Cache for 15 minutes
+      exclude: {
+        paths: [this.resourceName],
+      },
+    });
 
     getALL = () => {
         store.dispatch(startLoading());
 
-        return this.axios
-            .get(`${this.resourceName}`)
+        return this.cache
+            .get(this.resourceName)
             .then(response => {
                 return response.data;
             })

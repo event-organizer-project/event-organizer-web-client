@@ -1,4 +1,4 @@
-import { UserManager } from 'oidc-client';
+import { UserManager, WebStorageStateStore } from 'oidc-client';
 import { storeUserError, storeUser, setAuthHeader } from '../store/authSlice'
 import { setGeneralLoading } from '../store/generalSlice'
 
@@ -16,7 +16,8 @@ export class AuthService {
     scope: "openid profile eventorganizer_api",
     post_logout_redirect_uri: `${process.env.REACT_APP_WEB_CLIENT_URL}/signout-oidc`,
     automaticSilentRenew: true,
-    loadUserInfo: true
+    loadUserInfo: true,
+    userStore: new WebStorageStateStore({ store: window.localStorage })
   };
 
   constructor() {

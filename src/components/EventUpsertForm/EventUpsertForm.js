@@ -1,12 +1,13 @@
 import { useForm, Controller } from 'react-hook-form'
 import { FormGroup, TextField, Button, FormHelperText } from '@mui/material';
-import { DatePicker, MobileTimePicker } from '@mui/x-date-pickers'
+import { MobileDateTimePicker } from '@mui/x-date-pickers'
 import TagInput from 'components/TagInput/TagInput'
 
 import dayjs from 'dayjs'
-import dateTimeSetting from '../../constants/date-time-setting'
+import dateTimeSetting from 'constants/date-time-setting'
 
 export default function EventUpsertForm({ event, submitAction, cancelAction }) {
+
     const {
         control,
         watch,
@@ -21,23 +22,22 @@ export default function EventUpsertForm({ event, submitAction, cancelAction }) {
         defaultValues: {
             ...event,
             startDate: event.startDate && dayjs(event.startDate),
-            startTime: event.startTime && dayjs(event.startTime, dateTimeSetting.timeFormat),
-            endTime: event.endTime && dayjs(event.endTime, dateTimeSetting.timeFormat)
+            endDate: event.endDate && dayjs(event.endDate)
         }
     });
 
     const onSubmit = (data) => {
         var result = {
             ...data,
-            startDate: data.startDate.format(dateTimeSetting.dateFormat),
-            startTime: data.startTime.format(dateTimeSetting.timeFormat),
-            endTime: data.endTime.format(dateTimeSetting.timeFormat)
+            startDate: data.startDate.format(dateTimeSetting.fullDateFormat),
+            endDate: data.endDate.format(dateTimeSetting.fullDateFormat)
         }
+
         submitAction(result);
     }
 
     const inputStyles = {
-        marginBottom: '2vh',
+        mb: '2vh',
         width: '100%'
     }
 
@@ -101,8 +101,8 @@ export default function EventUpsertForm({ event, submitAction, cancelAction }) {
                         required: 'Start date is required',
                     }}
                     render={({ field }) => (
-                        <DatePicker {...field}
-                            sx={inputStyles}
+                        <MobileDateTimePicker {...field}
+                            sx={{ width: '100%' }}
                             componentsProps={{
                                 textField: {
                                     size: 'small',
@@ -114,50 +114,29 @@ export default function EventUpsertForm({ event, submitAction, cancelAction }) {
                             }}
                         />
                     )} />
-                <FormHelperText error sx={{ ml: '14px' }}>{errors.startDate && errors.startDate?.message}</FormHelperText>
-                <FormGroup sx={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: '2vh' }}>
-                    <Controller name='startTime'
-                        control={control}
-                        rules={{
-                            required: 'Start time is required',
-                        }}
-                        render={({ field }) => (
-                            <MobileTimePicker {...field}
-                                sx={{ width: '45%' }}
-                                componentsProps={{
-                                    textField: {
-                                        size: 'small',
-                                        required: true,
-                                        label: 'Start Time',
-                                        variant: 'outlined',
-                                        error: !!errors.startTime
-                                    }
-                                }}
-                            />
-                        )} />
-                    <Controller name='endTime'
-                        control={control}
-                        rules={{
-                            required: 'End time is required',
-                        }}
-                        render={({ field }) => (
-                            <MobileTimePicker {...field}
-                                sx={{ width: '45%' }}
-                                componentsProps={{
-                                    textField: {
-                                        size: 'small',
-                                        required: true,
-                                        label: 'End Time',
-                                        variant: 'outlined',
-                                        error: !!errors.endTime
-                                    }
-                                }}
-                            />
-                        )} />
-                    {(!!errors.startTime || !!errors.endTime) &&
-                        <FormHelperText error sx={{ ml: '14px' }}>Error with event time</FormHelperText>
-                    }
-                </FormGroup>
+                <FormHelperText error sx={{ ml: '14px', mb: '2vh' }}>{errors.startDate && errors.startDate?.message}</FormHelperText>
+
+                <Controller name='endDate'
+                    control={control}
+                    rules={{
+                        required: 'End date is required',
+                    }}
+                    render={({ field }) => (
+                        <MobileDateTimePicker {...field}
+                            sx={{ width: '100%' }}
+                            componentsProps={{
+                                textField: {
+                                    size: 'small',
+                                    required: true,
+                                    label: 'End Date',
+                                    variant: 'outlined',
+                                    error: !!errors.endDate
+                                }
+                            }}
+                        />
+                    )} />
+                <FormHelperText error sx={{ ml: '14px', mb: '2vh' }}>{errors.endDate && errors.endDate?.message}</FormHelperText>
+                
                 <Controller name='eventTags'
                     control={control}
                     render={({ field }) => (

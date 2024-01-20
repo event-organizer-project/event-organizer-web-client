@@ -14,7 +14,8 @@ export default class RequestService {
         return axios
             .get(`${this.resourceName}/${id}`)
             .then(response => {
-                return response.data;
+                const event = response.data;
+                return {...event, startDate: new Date(event.startDate), endDate: new Date(event.endDate) };
             })
             .catch(error => {
                 console.log('Error:', error);

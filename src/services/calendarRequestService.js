@@ -13,7 +13,11 @@ export class CalendarRequestService extends RequestService {
         store.dispatch(startLoading());
         
         return axios
-            .get(`${this.resourceName}/${offset}`)
+            .get(`${this.resourceName}/${offset}`, {
+                headers: {
+                  'TimeZoneOffset': - new Date().getTimezoneOffset()
+                }
+              })
             .then(response => {
                 return response.data;
             })

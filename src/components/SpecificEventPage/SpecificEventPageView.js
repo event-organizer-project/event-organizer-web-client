@@ -14,6 +14,9 @@ export default function SpecificEventPageView({ event, setEvent, toUpdateMode })
     const locationNavigator = useLocationNavigator();
     const dateFormatter = useDateFormatter();
 
+    const startDay = dateFormatter.getDayFullFormat(event?.startDate);
+    const endDay = dateFormatter.getDayFullFormat(event?.endDate);
+
     const onTagClick = (tag) => {
         const url = new EventSearchUrlBuilder()
             .addTag(tag)
@@ -21,6 +24,8 @@ export default function SpecificEventPageView({ event, setEvent, toUpdateMode })
         
         locationNavigator.navigate(url);
     }
+
+    const timeIcon = <AccessTimeIcon sx={{ height: "0.5em", width: '0.5em', m: '0 0.1em 0 0.15em'}} />;
 
     return event && (
         <Box>
@@ -42,9 +47,8 @@ export default function SpecificEventPageView({ event, setEvent, toUpdateMode })
                     <Typography style={{whiteSpace: 'pre-line'}} >{event.description}</Typography>
 
                     <Typography variant="subtitle2">Date:</Typography>
-                    <Typography>{event.startDate}
-                        <AccessTimeIcon sx={{ height: "0.5em", width: '0.5em', ml: '0.5em' }} />
-                        {dateFormatter.getTime(event.startTime)} - {dateFormatter.getTime(event.endTime)}
+                    <Typography>{startDay}{timeIcon}{dateFormatter.getTime(event.startDate)} — {startDay != endDay && <span>{endDay}{timeIcon}</span>}
+                        {dateFormatter.getTime(event.endDate)}
                     </Typography>
 
                     <Typography variant="subtitle2">Recurrence:</Typography>

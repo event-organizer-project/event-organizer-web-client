@@ -43,8 +43,6 @@ const emptyEvent = {
     description: '',
     startDate: null,
     endDate: null,
-    startTime: null,
-    endTime: null,
     eventTags: [],
     members: [],
 }

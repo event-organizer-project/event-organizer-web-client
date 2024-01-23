@@ -1,15 +1,16 @@
+import { useDateFormatter } from 'utils/dateFormatter'
+
 export default class EventPositionCalculator {
+
+    dateFormatter = useDateFormatter();
 
     scale = 1440;
 
-    tags = [];
-    filter = '';
-
     calculatePosition = (event) => {
-        const startTime = event.startTime.split(':');
+        const startTime = this.dateFormatter.getTime(event.startDate).split(':');
         const startTimeInMinutes = +startTime[0] * 60 + +startTime[1];
 
-        const endTime = event.endTime.split(':');
+        const endTime = this.dateFormatter.getTime(event.endDate).split(':');
         const endTimeInMinutes = 1440 - (+endTime[0] * 60 + +endTime[1]);
 
         return {

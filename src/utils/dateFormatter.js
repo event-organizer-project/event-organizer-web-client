@@ -4,7 +4,9 @@ export default class DateFormatter {
 
     getDay = date => dayjs(date).format('DD.MM');
 
-    getTime = date => date.slice(0, 5)
+    getDayFullFormat = date => dayjs(date).format('DD/MM/YYYY');
+
+    getTime = date => dayjs(date).format('HH:mm')
 
     getMonthWithYear = date => dayjs(date).format('MMMM YY');
 

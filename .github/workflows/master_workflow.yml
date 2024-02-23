@@ -16,3 +16,13 @@ jobs:
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+
+  aws_eb_push:
+    name: Push to AWS EB
+    uses: event-organizer-project/event-organizer-infrastructure/.github/workflows/aws_eb_push.yml@master
+    with:
+      application_name: event-organizer
+      environment_name: eo-web-client
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

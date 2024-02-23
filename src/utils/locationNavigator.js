@@ -1,19 +1,20 @@
-import { useHistory, useLocation } from 'react-router-dom'; // version 5.2.0
+import { useHistory, useLocation } from 'react-router-dom' // version 5.2.0
 
 export default class LocationNavigator {
+    location = useLocation()
+    history = useHistory()
 
-    location = useLocation();
-    history = useHistory();
+    searchParams = new URLSearchParams(this.location.search)
 
-    searchParams = new URLSearchParams(this.location.search);
+    getUrlParam = (name) => this.searchParams.get(name)
 
-    getUrlParam = (name) => this.searchParams.get(name);
+    getFilterFromUrl = () => this.getUrlParam('filter') ?? ''
 
-    getFilterFromUrl = () => this.getUrlParam('filter') ?? '';
+    getTagsFromUrl = () => this.getUrlParam('tags')?.split(';') ?? []
 
-    getTagsFromUrl = () => this.getUrlParam('tags')?.split(';') ?? [];
+    navigate = (url) => this.history.push(url) //history.replace(url)
 
-    navigate = (url) => this.history.push(url); //history.replace(url)
+    toPreviousPage = () => this.history.back()
 }
 
-export const useLocationNavigator = () => new LocationNavigator();
+export const useLocationNavigator = () => new LocationNavigator()

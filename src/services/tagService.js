@@ -1,39 +1,30 @@
-import axios from 'axios';
-import { setupCache  } from 'axios-cache-interceptor';
-import { startLoading, finishLoading, setError } from 'store/generalSlice'
-import store from 'store/store';
+import axios from 'axios'
+import { setupCache } from 'axios-cache-interceptor'
+import BaseRequestService from './baseRequestService'
 
-export class TagService {
+export class TagService extends BaseRequestService {
+    constructor() {
+        super('tag')
+    }
 
-    resourceName = `${process.env.REACT_APP_WEB_API_URL}/tag`;
-    
-    api = axios.create();
+    api = axios.create()
 
     // Set up caching for only one specific endpoint
     cache = setupCache(this.api, {
-      maxAge: 15 * 60 * 1000, // Cache for 15 minutes
-      exclude: {
-        paths: [this.resourceName],
-      },
-    });
+        maxAge: 15 * 60 * 1000, // Cache for 15 minutes
+        exclude: {
+            paths: [this.resourceName],
+        },
+    })
 
-    getALL = () => {
-        store.dispatch(startLoading());
-
-        return this.cache
-            .get(this.resourceName)
-            .then(response => {
-                return response.data;
-            })
-            .catch(error => {
-                store.dispatch(setError(error.response.statusText));
-            })
-            .finally(() => {
-                store.dispatch(finishLoading());
-            });
-    }
+    getALL = (onSuccess, onError) =>
+    this.handleRequest(
+        this.cache.get(this.resourceName),
+        onSuccess,
+        onError
+    )
 }
 
-const tagService = new TagService();
+const tagService = new TagService()
 
-export default tagService;
+export default tagService

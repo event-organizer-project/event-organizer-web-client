@@ -1,49 +1,25 @@
 import axios from 'axios'
 import RequestService from './requestService'
-import { startLoading, finishLoading, setError } from 'store/generalSlice'
-import store from 'store/store';
 
 export class EventRequestService extends RequestService {
-
     constructor() {
-        super('event');
+        super('event')
     }
 
-    schedule = (id, isScheduled) => {
-        store.dispatch(startLoading());
-        
-        return axios
-            .get(`${this.resourceName}/schedule/${id}/${isScheduled}`)
-            .then(response => {
-                return response.data;
-            })
-            .catch(error => {
-                console.log('Error:', error);
-                store.dispatch(setError(error.response.statusText));
-            })
-            .finally(() => {
-                store.dispatch(finishLoading());
-            });
-    }
+    get = (id, onError) => 
+        this.baseGet(id, event => ({
+            ...event,
+            startDate: new Date(event.startDate),
+            endDate: new Date(event.endDate),
+        }), onError)
 
-    getOwnEvents = () => {
-        store.dispatch(startLoading());
-        
-        return axios
-            .get(`${this.resourceName}/own-events`)
-            .then(response => {
-                return response.data;
-            })
-            .catch(error => {
-                console.log('Error:', error);
-                store.dispatch(setError(error.response.statusText));
-            })
-            .finally(() => {
-                store.dispatch(finishLoading());
-            });
-    }
+    schedule = (id, isScheduled, onSuccess, onError) =>
+        this.handleRequest(axios.get(`${this.resourceName}/schedule/${id}/${isScheduled}`), onSuccess, onError)
+
+    getOwnEvents = (onSuccess, onError) =>
+        this.handleRequest(axios.get(`${this.resourceName}/own-events`), onSuccess, onError)
 }
 
-const eventRequestService = new EventRequestService();
+const eventRequestService = new EventRequestService()
 
-export default eventRequestService;
+export default eventRequestService

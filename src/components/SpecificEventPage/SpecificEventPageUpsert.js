@@ -9,18 +9,15 @@ export default function SpecificEventPageUpsert({ event, toViewMode, setEvent })
     const isCreateMode = !event;
     const history = useHistory();
 
-    const onSubmit = isCreateMode 
-        ? (data) => eventRequestService.post(data)
-            .then(result => { 
-                history.push(`${routes.events}/${result.id}`);
-                setEvent(result);
-                toViewMode();
-            })
-        : (data) => eventRequestService.put(data)
-            .then(result => { 
-                setEvent(result);
-                toViewMode();
-            });
+    const redirectToEvent = result => {
+        history.push(`${routes.events}/${result.id}`);
+        setEvent(result);
+        toViewMode();
+    }
+
+    const onSubmit = isCreateMode
+        ? (data) => eventRequestService.post(data, redirectToEvent)
+        : (data) => eventRequestService.put(data, redirectToEvent);
 
     return (
         <Box>

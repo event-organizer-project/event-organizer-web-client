@@ -1,36 +1,21 @@
 import axios from 'axios'
-import RequestService from './requestService'
-import { startLoading, finishLoading, setError } from 'store/generalSlice'
-import store from 'store/store';
+import BaseRequestService from './baseRequestService'
 
-export class CalendarRequestService extends RequestService {
-
+export class CalendarRequestService extends BaseRequestService {
     constructor() {
-        super('calendar');
+        super('calendar')
     }
 
-    get = (offset = 0) => {
-        store.dispatch(startLoading());
-        
-        return axios
-            .get(`${this.resourceName}/${offset}`, {
-                headers: {
-                  'TimeZoneOffset': - new Date().getTimezoneOffset()
-                }
-              })
-            .then(response => {
-                return response.data;
-            })
-            .catch(error => {
-                console.log('Error:', error);
-                store.dispatch(setError(error.response.statusText));
-            })
-            .finally(() => {
-                store.dispatch(finishLoading());
-            });
-    }
+    get = (offset = 0, onSuccess, onError) =>
+        this.handleRequest(
+            axios.get(`${this.resourceName}/${offset}`, {
+                headers: { TimeZoneOffset: -new Date().getTimezoneOffset() },
+            }),
+            onSuccess,
+            onError
+        )
 }
 
-const calendarRequestService = new CalendarRequestService();
+const calendarRequestService = new CalendarRequestService()
 
-export default calendarRequestService;
+export default calendarRequestService

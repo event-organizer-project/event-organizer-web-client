@@ -3,13 +3,14 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import store from './store/store';
-import authService from './services/authService'
+import store from 'store/store';
+import authService from 'services/authService'
 
-import AuthProvider from './components/Auth/authProvider'
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
-import LoadingIndicator from './components/LoadingIndicator/LoadingIndicator';
+import AuthProvider from 'components/Auth/authProvider'
+import Header from 'components/Header/Header';
+import Footer from 'components/Footer/Footer';
+import LoadingIndicator from 'components/LoadingIndicator/LoadingIndicator';
+import ErrorPopUp from 'components/ErrorPopUp/ErrorPopUp'
 import Main from 'components/Main/Main'
 
 export default function App() {
@@ -27,6 +28,7 @@ export default function App() {
             <Main />
             <Footer />
             <LoadingIndicator />
+            <ErrorPopUp />
           </Router>
         </AuthProvider>
       </Provider>

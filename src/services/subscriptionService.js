@@ -1,34 +1,24 @@
-import axios from 'axios';
-import { startLoading, finishLoading, setError } from 'store/generalSlice'
-import store from 'store/store';
+import axios from 'axios'
+import BaseRequestService from './baseRequestService'
 
-export class SubscriptionService {
+export class SubscriptionService extends BaseRequestService {
+    constructor() {
+        super('subscription')
+    }
 
-  resourceName = `${process.env.REACT_APP_WEB_API_URL}/subscription`;
+    getPublicKey = () => {
+        return process.env.REACT_APP_PUSH_PUBLIC_KEY
+    }
 
-  getPublicKey = () => {
-    return process.env.REACT_APP_PUSH_PUBLIC_KEY;
-  }
-
-  storeSubscription(payload) {
-    store.dispatch(startLoading());
-
-    return axios
-        .post(this.resourceName, payload)
-        .then(response => {
-            return response.data
-        })
-        .catch(error => {
-            store.dispatch(setError(error.response.statusText));
-            return null;
-        })
-        .finally(() => {
-            store.dispatch(finishLoading());
-        });
-  }
-
-  /*
-  discardSubscription(payload) {
+    storeSubscription = (payload, onSuccess, onError) =>
+        this.handleRequest(
+            axios.post(this.resourceName, payload),
+            onSuccess,
+            onError
+        )
+    
+    /*
+    discardSubscription(payload) {
     store.dispatch(startLoading());
 
     return axios
@@ -46,6 +36,6 @@ export class SubscriptionService {
   }*/
 }
 
-const subscriptionService = new SubscriptionService();
+const subscriptionService = new SubscriptionService()
 
-export default subscriptionService;
+export default subscriptionService

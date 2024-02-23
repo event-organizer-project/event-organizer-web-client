@@ -1,25 +1,15 @@
 import axios from 'axios'
-import { startLoading, finishLoading, setError } from '../store/generalSlice'
-import store from '../store/store';
+import BaseRequestService from './baseRequestService'
 
-export default class UserProfileService {
-
-    resourceName = `${process.env.REACT_APP_WEB_API_URL}/userprofile`;
-
-    getCurrentUserProfile = () => {
-        store.dispatch(startLoading());
-        
-        return axios
-            .get(`${this.resourceName}/current`)
-            .then(response => {
-                return response.data;
-            })
-            .catch(error => {
-                console.log('Error:', error);
-                store.dispatch(setError(error.response.statusText));
-            })
-            .finally(() => {
-                store.dispatch(finishLoading());
-            });
+export default class UserProfileService extends BaseRequestService {
+    constructor() {
+        super('userprofile')
     }
+
+    getCurrentUserProfile = (onSuccess, onError) =>
+        this.handleRequest(
+            axios.get(`${this.resourceName}/current`),
+            onSuccess,
+            onError
+        )
 }

@@ -62,7 +62,7 @@ export default function CalendarPage() {
                         center: 'title',
                         right: 'prev,next today',
                     }}
-                    datesSet={handleDatesSet} // handle click on prev or next week
+                    datesSet={handleDatesSet} // Handle click on prev or next week
                     eventClick={handleEventClick}
                     firstDay={1} // Set Monday as the first day of the week
                     scrollTime={scrollTime()}

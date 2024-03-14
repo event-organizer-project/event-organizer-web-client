@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Provider } from 'react-redux'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import store from 'store/store'
